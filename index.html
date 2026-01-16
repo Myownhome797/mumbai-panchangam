@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Time Based Lookup</title>
+<style>
+  body { font-family: Arial, sans-serif; padding: 20px; }
+  .box { border: 1px solid #ccc; padding: 15px; margin-top: 10px; }
+</style>
+</head>
+<body>
+
+<h2>Current Time Based Record</h2>
+<div id="output" class="box">Loading…</div>
+
+<script>
+async function loadData() {
+  const response = await fetch("data.csv");
+  const text = await response.text();
+  const rows = text.trim().split("\n").slice(1); // skip header
+
+  const now = new Date();
+
+  for (const row of rows) {
+    const cols = row.split(",");
+
+    const fromDT = new Date(`${cols[0]} ${cols[1]}`);
+    const toDT   = new Date(`${cols[2]} ${cols[3]}`);
+
+    if (now >= fromDT && now <= toDT) {
+      document.getElementById("output").innerHTML = `
+        <b>Matched Record</b><br><br>
+        Field 5: ${cols[4]}<br>
+        Field 6: ${cols[5]}<br>
+        Field 7: ${cols[6]}<br>
+        Field 8: ${cols[7]}<br>
+        Field 9: ${cols[8]}<br>
+        Field 10: ${cols[9]}
+      `;
+      return;
+    }
+  }
+
+  document.getElementById("output").innerHTML =
+    "No matching record for current time.";
+}
+
+loadData();
+</script>
+
+</body>
+</html>
