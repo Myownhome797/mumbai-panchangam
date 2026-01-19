@@ -15,6 +15,12 @@
 
 <script>
 async function loadData() {
+  const nowLocal = new Date();
+
+  document.getElementById("output").innerHTML = `
+  <b>Your current local time is: </b>
+  ${nowLocal.toLocaleString(undefined, { timeZoneName: "short" })}
+`;
   const response = await fetch("data.csv");
   const text = await response.text();
 
@@ -62,7 +68,7 @@ Varsham: ${cols[idx("Varsham")]}<br>
 Chandramanam_masam: ${cols[idx("Chandramanam_masam")]}<br>
 Paksham: ${cols[idx("Paksham")]}<br>
 Ruthu: ${cols[idx("Ruthu")]}<br>
-///from_date: ${cols[idx("from_date")]}<br>
+//from_date: ${cols[idx("from_date")]}<br>
 //from_hh: ${cols[idx("from_hh")]}<br
 //from_mm: ${cols[idx("from_mm")]}<br>
 //to_date: ${cols[idx("to_date")]}<br>
