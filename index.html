@@ -56,25 +56,26 @@ async function loadData() {
       const fromLocal = new Date(fromUTC);
       const toLocal   = new Date(toUTC);
 
-      document.getElementById("output").innerHTML = `
+      document.getElementById("output").innerHTML += `
 <b>Matched Record</b><br><br>
 
-<b>From (local):</b> ${fromLocal.toLocaleString()}<br>
-<b>To (local):</b> ${toLocal.toLocaleString()}<br><br>
 
-//Thithi_0: ${cols[idx("Thithi_0")]}<br>
-Thithi_1: ${cols[idx("Thithi_1")]}<br>
+<!--Thithi_0: ${cols[idx("Thithi_0")]}<br>
 Varsham: ${cols[idx("Varsham")]}<br>
+Ruthu: ${cols[idx("Ruthu")]}<br>
 Chandramanam_masam: ${cols[idx("Chandramanam_masam")]}<br>
 Paksham: ${cols[idx("Paksham")]}<br>
-Ruthu: ${cols[idx("Ruthu")]}<br>
-//from_date: ${cols[idx("from_date")]}<br>
-//from_hh: ${cols[idx("from_hh")]}<br
-//from_mm: ${cols[idx("from_mm")]}<br>
-//to_date: ${cols[idx("to_date")]}<br>
-//to_hh: ${cols[idx("to_hh")]}<br>
-//to_mm: ${cols[idx("to_mm")]}
-//Duration_in_mins: ${cols[idx("Duration_in_mins")]}
+Thithi: ${cols[idx("Thithi_1")]}<br>
+Thithi starts at:</b> ${fromLocal.toLocaleString()}<br>
+Thithi ends at:</b> ${toLocal.toLocaleString()}<br><br>
+
+<!--from_date: ${cols[idx("from_date")]}<br>
+<!--from_hh: ${cols[idx("from_hh")]}<br
+<!--from_mm: ${cols[idx("from_mm")]}<br>
+<!--to_date: ${cols[idx("to_date")]}<br>
+<!--to_hh: ${cols[idx("to_hh")]}<br>
+<!--to_mm: ${cols[idx("to_mm")]}
+<!--Duration_in_mins: ${cols[idx("Duration_in_mins")]}
 `;
       return; // stop after first match
     }
