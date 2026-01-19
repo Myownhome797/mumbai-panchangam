@@ -17,36 +17,72 @@
 async function loadData() {
   const response = await fetch("data.csv");
   const text = await response.text();
-  const rows = text.trim().split("\n").slice(1); // skip header
 
-  const now = new Date();
+  const lines = text.trim().split("\n");
+
+  // ---- PARSE HEADER ----
+  const headers = lines[0].split(",");
+  const idx = name => headers.indexOf(name);
+
+  // ---- DATA ROWS ----
+  const rows = lines.slice(1);
+
+  // Current time in UTC (ms since epoch)
+  const nowUTC = Date.now();
 
   for (const row of rows) {
     const cols = row.split(",");
 
-    const fromDT = new Date(`${cols[0]} ${cols[1]}`);
-    const toDT   = new Date(`${cols[2]} ${cols[3]}`);
+    // ---- FROM (UTC) ----
+    const fromUTC = Date.parse(
+      `${cols[idx("from_date")].slice(0,4)}-${cols[idx("from_date")].slice(4,6)}-${cols[idx("from_date")].slice(6,8)}T` +
+      `${cols[idx("from_hh")].padStart(2,"0")}:${cols[idx("from_mm")].padStart(2,"0")}:00Z`
+    );
 
-    if (now >= fromDT && now <= toDT) {
+    // ---- TO (UTC) ----
+    const toUTC = Date.parse(
+      `${cols[idx("to_date")].slice(0,4)}-${cols[idx("to_date")].slice(4,6)}-${cols[idx("to_date")].slice(6,8)}T` +
+      `${cols[idx("to_hh")].padStart(2,"0")}:${cols[idx("to_mm")].padStart(2,"0")}:00Z`
+    );
+
+    // ---- MATCH CHECK ----
+    if (nowUTC >= fromUTC && nowUTC <= toUTC) {
+      const fromLocal = new Date(fromUTC);
+      const toLocal   = new Date(toUTC);
+
       document.getElementById("output").innerHTML = `
-        <b>Matched Record</b><br><br>
-        Field 5: ${cols[4]}<br>
-        Field 6: ${cols[5]}<br>
-        Field 7: ${cols[6]}<br>
-        Field 8: ${cols[7]}<br>
-        Field 9: ${cols[8]}<br>
-        Field 10: ${cols[9]}
-      `;
-      return;
+<b>Matched Record</b><br><br>
+
+<b>From (local):</b> ${fromLocal.toLocaleString()}<br>
+<b>To (local):</b> ${toLocal.toLocaleString()}<br><br>
+
+Thithi_0: ${cols[idx("Thithi_0")]}<br>
+Thithi_1: ${cols[idx("Thithi_1")]}<br>
+Varsham: ${cols[idx("Varsham")]}<br>
+Chandramanam_masam: ${cols[idx("Chandramanam_masam")]}<br>
+Paksham: ${cols[idx("Paksham")]}<br>
+Ruthu: ${cols[idx("Ruthu")]}
+from_date: ${cols[idx("from_date")]}<br>
+from_hh: ${cols[idx("from_hh")]}<br>
+from_mm: ${cols[idx("from_mm")]}<br>
+to_date: ${cols[idx("to_date")]}<br>
+to_hh: ${cols[idx("to_hh")]}<br>
+to_mm: ${cols[idx("to_mm")]}
+Duration_in_mins: ${cols[idx("Duration_in_mins")]}
+`;
+      return; // stop after first match
     }
   }
 
+
+  // runs only if no row matched
   document.getElementById("output").innerHTML =
     "No matching record for current time.";
 }
 
 loadData();
 </script>
+
 
 </body>
 </html>
