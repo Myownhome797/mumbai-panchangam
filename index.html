@@ -10,7 +10,7 @@
 </head>
 <body>
 
-<h2>My PANCHANGAM</h2>
+<h2>My PANCHAANGAM</h2>
 <div id="output" class="box">Loading…</div>
 
 <script>
@@ -36,8 +36,10 @@ const THITHI_MAPPING = {
   const nowLocal = new Date();
 
   document.getElementById("output").innerHTML = `
-  <b>Current local time: </b><br>
-  ${nowLocal.toLocaleString(undefined, { timeZoneName: "short" })}
+  <b>Current local time: </b> 
+  ${nowLocal.toLocaleTimeString(undefined, { hour: 'numeric', minute: '2-digit', hour12: true })}<br>
+`;
+
 `;
   const response = await fetch("data.csv");
   const text = await response.text();
