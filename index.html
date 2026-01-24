@@ -14,11 +14,28 @@
 <div id="output" class="box">Loading…</div>
 
 <script>
-async function loadData() {
+const THITHI_MAPPING = {
+        "1": "Prathama",
+        "2": "Dwitiya",
+        "3": "Tritiya",
+        "4": "Chaturthi",
+        "5": "Panchami",
+        "6": "Shashthi",
+        "7": "Saptami",
+        "8": "Ashtami",
+        "9": "Navami",
+        "10": "Dashami",
+        "11": "Ekadashi",
+        "12": "Dwadashi",
+        "13": "Trayodashi",
+        "14": "Chaturdashi",
+        "15": "Purnima / Amavasya"
+      };
+  async function loadData() {
   const nowLocal = new Date();
 
   document.getElementById("output").innerHTML = `
-  <b>Your current local time is: </b>
+  <b>Current local time: </b>
   ${nowLocal.toLocaleString(undefined, { timeZoneName: "short" })}
 `;
   const response = await fetch("data.csv");
@@ -55,12 +72,16 @@ async function loadData() {
     if (nowUTC >= fromUTC && nowUTC <= toUTC) {
       const fromLocal = new Date(fromUTC);
       const toLocal   = new Date(toUTC);
+      const thithiCode = cols[idx("Thithi_1")];
+      const thithiDesc = THITHI_MAPPING[thithiCode] ?? thithiCode;
+      
 
     
 document.getElementById("output").innerHTML += `
-<b>Matched Record</b><br><br>
-
-Thithi: ${cols[idx("Thithi_1")]}<br>
+<br>
+<b>Thithi details:</b><br><br>
+Thithi: ${thithiDesc}<br>
+<!-- Thithi: ${cols[idx("Thithi_1")]}<br> -->
 Thithi starts at: ${fromLocal.toLocaleString()}<br>
 Thithi ends at: ${toLocal.toLocaleString()}<br><br>
 
