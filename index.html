@@ -74,7 +74,20 @@ const THITHI_MAPPING = {
       const toLocal   = new Date(toUTC);
       const thithiCode = cols[idx("Thithi_1")];
       const thithiDesc = THITHI_MAPPING[thithiCode] ?? thithiCode;
+      // ---- TIME CALCULATIONS ----
+      const elapsedMs = nowUTC - fromUTC;
+      const remainingMs = toUTC - nowUTC;
       
+      const elapsedHours = Math.floor(elapsedMs / (1000 * 60 * 60));
+      const elapsedMinutes = Math.floor(
+        (elapsedMs % (1000 * 60 * 60)) / (1000 * 60)
+      );
+      
+      const remainingHours = Math.floor(remainingMs / (1000 * 60 * 60));
+      const remainingMinutes = Math.floor(
+        (remainingMs % (1000 * 60 * 60)) / (1000 * 60)
+      );
+
 
     
 document.getElementById("output").innerHTML += `
@@ -83,7 +96,13 @@ Thithi: ${thithiDesc}<br>
 <!-- Thithi: ${cols[idx("Thithi_1")]}<br> -->
 Thithi starts at: ${fromLocal.toLocaleString()}<br>
 Thithi ends at: ${toLocal.toLocaleString()}<br><br>
+Time elapsed: ${elapsedHours} h ${elapsedMinutes} min<br>
+Time remaining: ${remainingHours} h ${remainingMinutes} min<br><br>
 
+<!-- Debug info below -->
+<!-- fromUTC: ${fromUTC} -->
+<!-- toUTC: ${toUTC} -->
+<!-- nowUTC: ${nowUTC} -->
 <!-- Thithi_0: ${cols[idx("Thithi_0")]}<br> -->
 <!-- Varsham: ${cols[idx("Varsham")]}<br> -->
 <!-- Ruthu: ${cols[idx("Ruthu")]}<br> -->
