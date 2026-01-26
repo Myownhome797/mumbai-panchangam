@@ -34,11 +34,22 @@ const THITHI_MAPPING = {
       };
   async function loadData() {
   const nowLocal = new Date();
+  const nowLocal = new Date();
+  nowLocal.setSeconds(0, 0); // seconds = 0, milliseconds = 0
 
   document.getElementById("output").innerHTML = `
-  <b>Current local time: </b> 
-  ${nowLocal.toLocaleTimeString(undefined, { hour: 'numeric', minute: '2-digit', hour12: true })}<br>
-`;
+  <b>Current local date & time:</b><br>
+  ${nowLocal.toLocaleString(undefined, {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+    hour: "numeric",
+    minute: "2-digit",
+    second: "2-digit",
+    hour12: true
+  })}<br>
+`
+;
   const response = await fetch("data_thithi.csv");
   const text = await response.text();
 
