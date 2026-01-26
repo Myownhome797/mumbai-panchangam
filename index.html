@@ -39,7 +39,7 @@ const THITHI_MAPPING = {
   <b>Current local time: </b> 
   ${nowLocal.toLocaleTimeString(undefined, { hour: 'numeric', minute: '2-digit', hour12: true })}<br>
 `;
-  const response = await fetch("data.csv");
+  const response = await fetch("data_thithi.csv");
   const text = await response.text();
 
   const lines = text.trim().split("\n");
