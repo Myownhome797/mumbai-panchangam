@@ -34,7 +34,6 @@ const THITHI_MAPPING = {
       };
   async function loadData() {
   const nowLocal = new Date();
-  const nowLocal = new Date();
   nowLocal.setSeconds(0, 0); // seconds = 0, milliseconds = 0
 
   document.getElementById("output").innerHTML = `
@@ -50,7 +49,7 @@ const THITHI_MAPPING = {
   })}<br>
 `
 ;
-;
+
   const response = await fetch("data_thithi.csv");
   const text = await response.text();
 
