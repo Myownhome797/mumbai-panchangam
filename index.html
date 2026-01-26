@@ -64,9 +64,6 @@ const THITHI_MAPPING = {
   // ---- DATA ROWS ----
   const rows = lines.slice(1);
 
-  // Current time in UTC (ms since epoch)
-  const nowUTC = Date.now();
-
   for (const row of rows) {
     const cols = row.split(",");
 
@@ -83,7 +80,7 @@ const THITHI_MAPPING = {
     );
 
     // ---- MATCH CHECK ----
-    if (nowUTC >= fromUTC && nowUTC <= toUTC) {
+    if (nowUTC >= fromUTC && nowUTC < toUTC) {
       const fromLocal = new Date(fromUTC);
       const toLocal   = new Date(toUTC);
       const thithiCode = cols[idx("Thithi_1")];
