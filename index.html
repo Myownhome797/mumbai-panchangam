@@ -33,12 +33,14 @@ const THITHI_MAPPING = {
         "AMA": "Amaavaasya"
       };
   async function loadData() {
-  const nowLocal = new Date();
-  nowLocal.setSeconds(0, 0); // seconds = 0, milliseconds = 0
-
+  const nowlocal = new Date();
+  nowlocal.setSeconds(0, 0); // seconds = 0, milliseconds = 0
+  
+  const nowUTC = nowlocal.getTime(); // use THIS everywhere
+    
   document.getElementById("output").innerHTML = `
   <b>Current local date & time:</b><br>
-  ${nowLocal.toLocaleString(undefined, {
+  ${nowlocal.toLocaleString(undefined, {
     year: "numeric",
     month: "short",
     day: "numeric",
