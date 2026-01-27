@@ -104,8 +104,22 @@ document.getElementById("output").innerHTML += `
 <br><b>Thithi details:</b><br><br>
 Name: ${thithiDesc}<br>
 <!-- Thithi: ${cols[idx("t_Thithi_1")]}<br> -->
-Starts at: ${fromLocal.toLocaleString()}<br>
-Ends at: ${toLocal.toLocaleString()}<br>
+Starts at: ${fromLocal.toLocaleString(undefined, {
+  year: "numeric",
+  month: "short",
+  day: "numeric",
+  hour: "numeric",
+  minute: "2-digit",
+  hour12: true
+})}<br>
+Ends at: ${toLocal.toLocaleString(undefined, {
+  year: "numeric",
+  month: "short",
+  day: "numeric",
+  hour: "numeric",
+  minute: "2-digit",
+  hour12: true
+})}<br>
 Elapsed time: ${elapsedStr}<br>
 Remaining time: ${remainingStr}<br>
 
