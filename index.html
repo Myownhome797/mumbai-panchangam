@@ -121,8 +121,11 @@ Ends at: ${toLocal.toLocaleString(undefined, {
   hour12: true
 })}<br>
 Elapsed time: ${elapsedStr}<br>
-Remaining time: ${remainingStr}<br>
+Remaining time: ${remainingStr}<br><br><br>
 
+
+<canvas id="timePie" width="200" height="200" style="margin-top:10px;"></canvas>
+`;
 <!-- Debug info below -->
 <!-- fromUTC: ${fromUTC} -->
 <!-- toUTC: ${toUTC} -->
@@ -149,6 +152,56 @@ Remaining time: ${remainingStr}<br>
   // runs only if no row matched
   document.getElementById("output").innerHTML =
     "No matching record for current time.";
+}
+
+function drawTimePie(elapsedMs, remainingMs) {
+  const canvas = document.getElementById("timePie");
+  const ctx = canvas.getContext("2d");
+
+  const total = elapsedMs + remainingMs;
+  const elapsedFraction = elapsedMs / total;
+
+  const centerX = canvas.width / 2;
+  const centerY = canvas.height / 2;
+  const radius = 80;
+
+  // Start at 12 o’clock
+  const startAngle = -0.5 * Math.PI;
+
+  // Clear
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  // ---- Remaining (LEFT side) ----
+  ctx.beginPath();
+  ctx.moveTo(centerX, centerY);
+  ctx.arc(
+    centerX,
+    centerY,
+    radius,
+    startAngle + elapsedFraction * 2 * Math.PI,
+    startAngle + 2 * Math.PI
+  );
+  ctx.fillStyle = "#e0e0e0"; // light gray
+  ctx.fill();
+
+  // ---- Elapsed (RIGHT side) ----
+  ctx.beginPath();
+  ctx.moveTo(centerX, centerY);
+  ctx.arc(
+    centerX,
+    centerY,
+    radius,
+    startAngle,
+    startAngle + elapsedFraction * 2 * Math.PI
+  );
+  ctx.fillStyle = "#4CAF50"; // green
+  ctx.fill();
+
+  // Optional outline
+  ctx.beginPath();
+  ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI);
+  ctx.strokeStyle = "#333";
+  ctx.stroke();
 }
 
 loadData();
