@@ -89,26 +89,27 @@ const THITHI_MAPPING = {
       const elapsedMs = nowUTC - fromUTC;
       const remainingMs = toUTC - nowUTC;
       
-      const elapsedHours = Math.floor(elapsedMs / (1000 * 60 * 60));
-      const elapsedMinutes = Math.floor(
-        (elapsedMs % (1000 * 60 * 60)) / (1000 * 60)
-      );
-      
-      const remainingHours = Math.floor(remainingMs / (1000 * 60 * 60));
-      const remainingMinutes = Math.floor(
-        (remainingMs % (1000 * 60 * 60)) / (1000 * 60)
-      );
+      // ---- TIME CALCULATIONS ----
+      const elapsedDays = Math.floor(elapsedMs / (1000 * 60 * 60 * 24));
+      const elapsedHours = Math.floor((elapsedMs % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const elapsedMinutes = Math.floor((elapsedMs % (1000 * 60 * 60)) / (1000 * 60));
 
+      const remainingDays = Math.floor(remainingMs / (1000 * 60 * 60 * 24));
+      const remainingHours = Math.floor((remainingMs % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const remainingMinutes = Math.floor((remainingMs % (1000 * 60 * 60)) / (1000 * 60));
 
-    
+      // ---- DISPLAY ----
+      const elapsedStr = `${elapsedDays > 0 ? elapsedDays + " d " : ""}${elapsedHours} h ${elapsedMinutes} min`;
+      const remainingStr = `${remainingDays > 0 ? remainingDays + " d " : ""}${remainingHours} h ${remainingMinutes} min`;
+
 document.getElementById("output").innerHTML += `
 <br><b>Thithi details:</b><br>
 Thithi: ${thithiDesc}<br>
 <!-- Thithi: ${cols[idx("Thithi_1")]}<br> -->
 Thithi starts at: ${fromLocal.toLocaleString()}<br>
 Thithi ends at: ${toLocal.toLocaleString()}<br>
-Time elapsed: ${elapsedHours} h ${elapsedMinutes} min<br>
-Time remaining: ${remainingHours} h ${remainingMinutes} min<br><br>
+Time elapsed: ${elapsedStr}<br>
+Time remaining: ${remainingStr}<br>
 
 <!-- Debug info below -->
 <!-- fromUTC: ${fromUTC} -->
