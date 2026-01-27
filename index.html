@@ -10,7 +10,7 @@
 </head>
 <body>
 
-<h2>Yes !!! My PANCHAANGAM</h2>
+<h2>Yes2 !!! My PANCHAANGAM</h2>
 <div id="output" class="box">Loading…</div>
 
 <script>
@@ -39,8 +39,7 @@ const THITHI_MAPPING = {
   const nowUTC = nowlocal.getTime(); // use THIS everywhere
     
   document.getElementById("output").innerHTML = `
-  <b>Current local date & time:</b><br>
-  ${nowlocal.toLocaleString(undefined, {
+  <b>Current date & time:</b> ${nowlocal.toLocaleString(undefined, {
     year: "numeric",
     month: "short",
     day: "numeric",
@@ -69,21 +68,21 @@ const THITHI_MAPPING = {
 
     // ---- FROM (UTC) ----
     const fromUTC = Date.parse(
-      `${cols[idx("from_date")].slice(0,4)}-${cols[idx("from_date")].slice(4,6)}-${cols[idx("from_date")].slice(6,8)}T` +
-      `${cols[idx("from_hh")].padStart(2,"0")}:${cols[idx("from_mm")].padStart(2,"0")}:00Z`
+      `${cols[idx("t_from_date")].slice(0,4)}-${cols[idx("t_from_date")].slice(4,6)}-${cols[idx("t_from_date")].slice(6,8)}T` +
+      `${cols[idx("t_from_hh")].padStart(2,"0")}:${cols[idx("t_from_mm")].padStart(2,"0")}:00Z`
     );
 
     // ---- TO (UTC) ----
     const toUTC = Date.parse(
-      `${cols[idx("to_date")].slice(0,4)}-${cols[idx("to_date")].slice(4,6)}-${cols[idx("to_date")].slice(6,8)}T` +
-      `${cols[idx("to_hh")].padStart(2,"0")}:${cols[idx("to_mm")].padStart(2,"0")}:00Z`
+      `${cols[idx("t_to_date")].slice(0,4)}-${cols[idx("t_to_date")].slice(4,6)}-${cols[idx("t_to_date")].slice(6,8)}T` +
+      `${cols[idx("t_to_hh")].padStart(2,"0")}:${cols[idx("t_to_mm")].padStart(2,"0")}:00Z`
     );
 
     // ---- MATCH CHECK ----
     if (nowUTC >= fromUTC && nowUTC < toUTC) {
       const fromLocal = new Date(fromUTC);
       const toLocal   = new Date(toUTC);
-      const thithiCode = cols[idx("Thithi_1")];
+      const thithiCode = cols[idx("t_Thithi_1")];
       const thithiDesc = THITHI_MAPPING[thithiCode] ?? thithiCode;
       // ---- TIME CALCULATIONS ----
       const elapsedMs = nowUTC - fromUTC;
@@ -103,31 +102,31 @@ const THITHI_MAPPING = {
       const remainingStr = `${remainingDays > 0 ? remainingDays + " d " : ""}${remainingHours} h ${remainingMinutes} min`;
 
 document.getElementById("output").innerHTML += `
-<br><b>Thithi details:</b><br>
-Thithi: ${thithiDesc}<br>
-<!-- Thithi: ${cols[idx("Thithi_1")]}<br> -->
-Thithi starts at: ${fromLocal.toLocaleString()}<br>
-Thithi ends at: ${toLocal.toLocaleString()}<br>
-Time elapsed: ${elapsedStr}<br>
-Time remaining: ${remainingStr}<br>
+<br><b>Thithi details:</b><br><br>
+Name: ${thithiDesc}<br>
+<!-- Thithi: ${cols[idx("t_Thithi_1")]}<br> -->
+Starts at: ${fromLocal.toLocaleString()}<br>
+Ends at: ${toLocal.toLocaleString()}<br>
+Elapsed time: ${elapsedStr}<br>
+Remaining time: ${remainingStr}<br>
 
 <!-- Debug info below -->
 <!-- fromUTC: ${fromUTC} -->
 <!-- toUTC: ${toUTC} -->
 <!-- nowUTC: ${nowUTC} -->
-<!-- Thithi_0: ${cols[idx("Thithi_0")]}<br> -->
-<!-- Varsham: ${cols[idx("Varsham")]}<br> -->
-<!-- Ruthu: ${cols[idx("Ruthu")]}<br> -->
-<!-- Chandramanam_masam: ${cols[idx("Chandramanam_masam")]}<br> -->
-<!-- Paksham: ${cols[idx("Paksham")]}<br> -->
+<!-- Thithi_0: ${cols[idx("t_Thithi_0")]}<br> -->
+<!-- Varsham: ${cols[idx("t_Varsham")]}<br> -->
+<!-- Ruthu: ${cols[idx("t_Ruthu")]}<br> -->
+<!-- Chandramanam_masam: ${cols[idx("t_Chandramanam_masam")]}<br> -->
+<!-- Paksham: ${cols[idx("t_Paksham")]}<br> -->
 
-<!-- from_date: ${cols[idx("from_date")]}<br> -->
-<!-- from_hh: ${cols[idx("from_hh")]}<br> -->
-<!-- from_mm: ${cols[idx("from_mm")]}<br> -->
-<!-- to_date: ${cols[idx("to_date")]}<br> -->
-<!-- to_hh: ${cols[idx("to_hh")]}<br> -->
-<!-- to_mm: ${cols[idx("to_mm")]}<br> -->
-<!-- Duration_in_mins: ${cols[idx("Duration_in_mins")]} -->
+<!-- from_date: ${cols[idx("t_from_date")]}<br> -->
+<!-- from_hh: ${cols[idx("t_from_hh")]}<br> -->
+<!-- from_mm: ${cols[idx("t_from_mm")]}<br> -->
+<!-- to_date: ${cols[idx("t_to_date")]}<br> -->
+<!-- to_hh: ${cols[idx("t_to_hh")]}<br> -->
+<!-- to_mm: ${cols[idx("t_to_mm")]}<br> -->
+<!-- Duration_in_mins: ${cols[idx("t_Duration_in_mins")]} -->
 `;
       return; // stop after first match
     }
